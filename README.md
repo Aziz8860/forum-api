@@ -1,0 +1,1 @@
+make migrate-create name=create_user_table
