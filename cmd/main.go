@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	membershipRepo "github.com/aziz8860/forum-api/internal/repository/memberships"
+	membershipSvc "github.com/aziz8860/forum-api/internal/service/memberships"
 )
 
 func main() {
@@ -34,9 +35,10 @@ func main() {
 		log.Fatal("Gagal inisiasi database", err)
 	}
 
-	_ = membershipRepo.NewRepository(db)
+	membershipRepo := membershipRepo.NewRepository(db)
+	membershipService := membershipSvc.NewService(membershipRepo)
 
-	membershipHandler := memberships.NewHandler(r)
+	membershipHandler := memberships.NewHandler(r, membershipService)
 	membershipHandler.RegisterRoute()
 
 	r.Run(cfg.Service.Port)
