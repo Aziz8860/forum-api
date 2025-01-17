@@ -11,7 +11,7 @@ import (
 // kalau ga pakai, nanti r.db menjadi salinan dari koneksi database asli
 func (r *repository) GetUser(ctx context.Context, email, username string, userID int64) (*memberships.UserModel, error) {
 	query := `SELECT id, email, password, username, created_at, updated_at, created_by, updated_by
-	FROM users WHERE email = ? OR username = ?` // karena mysql pakai ?
+	FROM users WHERE email = ? OR username = ? OR id = ?` // karena mysql pakai ?
 	// Method dapat mengakses koneksi database yang sama
 	row := r.db.QueryRowContext(ctx, query, email, username, userID)
 
